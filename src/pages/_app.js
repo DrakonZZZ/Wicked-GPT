@@ -6,7 +6,13 @@ function App({ Component, pageProps }) {
     return (
         <>
             <UserProvider>
-                <Head></Head>
+                <Head>
+                    <link
+                        rel="icon"
+                        type="image/x-icon"
+                        href="/image/favicon.ico"
+                    />
+                </Head>
                 <Component {...pageProps} />
             </UserProvider>
         </>
