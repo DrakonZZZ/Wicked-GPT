@@ -9,25 +9,24 @@ export default function LayoutPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(message);
 
     const response = await fetch("api/conversation/pushMessage", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ chatText: message }),
+      body: JSON.stringify({ prompt: message }),
     });
 
-    const resData = response.body;
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
 
-    if (!resData) {
-      console.log("resData");
-      return;
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      const dataString = decoder.decode(value);
+      console.log(dataString);
     }
-
-    const reader = resData.getReader();
-    await streamReader(reader, (data) => console.log(data));
   };
 
   return (
